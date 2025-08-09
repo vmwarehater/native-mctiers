@@ -18,12 +18,7 @@ BOOL FillUUID(char* username){
         naettRequestWithOptions(url, 0, NULL);
     naettRes* res = naettMake(req);
     while(!naettComplete(res)){
-        #ifdef _WIN32
-        _sleep(100);
-        #elif 
-        #include <unistd.h>
-        sleep(1);
-        #endif
+        Sleep(100);
     }
     if(naettGetStatus(res) < 0){
         return FALSE;
@@ -55,12 +50,7 @@ DWORD WINAPI SearchThreadEntry(LPVOID stuff){
         naettRequestWithOptions(url, 0, NULL);
     naettRes* res = naettMake(req);
     while(!naettComplete(res)){
-        #ifdef _WIN32
-        _sleep(100);
-        #elif 
-        #include <unistd.h>
-        sleep(1);
-        #endif
+        Sleep(100);
     }
     if(naettGetStatus(res) < 0){
         ChangeState(3);
@@ -90,5 +80,7 @@ DWORD WINAPI SearchThreadEntry(LPVOID stuff){
 
 
 VOID BeginSearch(char* username){
+    // we don't free the handle from this, which might cause a very minor memleak
+    // TODO: find a way to free the handle this function returns so we dont leak memory
     CreateThread(NULL, 0, SearchThreadEntry, (LPVOID)username, 0, 0);
 }
