@@ -68,7 +68,7 @@ DWORD WINAPI SearchThreadEntry(LPVOID stuff){
         sprintf_s(tier.tierName, 10, "%s", specific->string);
         cJSON* curtier = cJSON_GetObjectItem(specific, "tier");
         cJSON* horl = cJSON_GetObjectItem(specific, "pos");
-        char level = horl->valueint ? 'H' : 'L';
+        char level = horl->valueint ? 'L' : 'H';
         sprintf_s(tier.tier, 5, "%cT%d", level, curtier->valueint);
         PlaceTier(tier);
     }

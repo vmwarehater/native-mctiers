@@ -9,7 +9,7 @@ INT main(INT argc, PCHAR argv[]){
     SetTargetFPS(60);
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     SetTraceLogLevel(LOG_ERROR);
-    InitWindow(800, 1000, "Open Mctiers");
+    InitWindow(800, 1000, "Native Mctiers");
     RGUIInit();
     while(!WindowShouldClose()){
         BeginDrawing();
