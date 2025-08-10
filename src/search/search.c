@@ -9,6 +9,7 @@
 #include "../state/resultstate.h"
 #include "../state/state.h"
 #include <Shlwapi.h>
+
 static char uuid[40];
 
 BOOL FillUUID(char* username){
