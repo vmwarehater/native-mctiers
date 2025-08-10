@@ -4,9 +4,16 @@
 #define RAYGUI_IMPLEMENTATION
 #include "extern/raylib/raygui.h"
 
+static Image img;
 
 VOID RGUIInit(){
+    img = LoadImage("resources\\img\\default.png");
+    RGUISetIconToDefault();
     GuiLoadStyle("resources\\styles\\style_genesis.rgs");
+}
+
+VOID RGUISetIconToDefault(){
+    SetWindowIcon(img);
 }
 
 VOID RGUIDrawText(const PCHAR text, INT x, INT y, FLOAT fontSize, BOOL isError){
@@ -36,5 +43,13 @@ INT Width(){
 }
 
 INT Height(){
-    return GetScreenWidth();
+    return GetScreenHeight();
+}
+
+Font RGUIGetFont(){
+    return GuiGetFont();
+}
+
+VOID RGUICleanup(){
+    UnloadImage(img);
 }

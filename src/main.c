@@ -6,10 +6,10 @@
 
 INT main(INT argc, PCHAR argv[]){
     naettInit(NULL);
-    SetTargetFPS(60);
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     SetTraceLogLevel(LOG_ERROR);
-    InitWindow(800, 1000, "Native Mctiers");
+    SetTargetFPS(60);
+    InitWindow(900, 1200, "Native Mctiers");
     RGUIInit();
     while(!WindowShouldClose()){
         BeginDrawing();
@@ -17,6 +17,7 @@ INT main(INT argc, PCHAR argv[]){
         RenderStates();
         EndDrawing();
     }
+    RGUICleanup();
     CloseWindow();
 
     return 0;
