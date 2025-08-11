@@ -6,7 +6,7 @@
 #include <winuser.h>
 
 typedef struct _TierArray {
-    char name[16];
+    char name[17];
     Tiers tierar[20];
 } TierArray;
 
@@ -14,13 +14,17 @@ static TierArray tierar;
 static int tierAmount = 0;
 
 void BeginTier(char* name){
-    strcpy_s(tierar.name, 16, name);
+    strcpy_s(tierar.name, 17, name);
 }
+
+
 
 void PlaceTier(Tiers tier){
     if(tierAmount < 0 || tierAmount > 19) return;
     strcpy_s(tierar.tierar[tierAmount].tier, 5, tier.tier);
-    strcpy_s(tierar.tierar[tierAmount].tierName, 10, tier.tierName);
+    strcpy_s(tierar.tierar[tierAmount].tierName, 50, tier.tierName);
+    strcpy_s(tierar.tierar[tierAmount].peakTier, 30, tier.peakTier);
+
     tierAmount++;
 }
 
@@ -39,13 +43,17 @@ void ResultState(){
     }
     Vector2 pos = {Width() - 200, 10};
     DrawTextureEx(text, pos, 0, 1, WHITE);
+    
     UINT64 final = 0;
     RGUIDrawText(tierar.name, 10, scroll + 10,  50, FALSE);
     
     for(int i = 0; i < tierAmount; i++){
-        RGUIDrawText(tierar.tierar[i].tierName, 10, scroll + ((i + 2) * 80), 30, FALSE);
-        RGUIDrawText(tierar.tierar[i].tier, 10, scroll + ((i + 2) * 80) + 30, 30, FALSE);
+        RGUIDrawTextEx(tierar.tierar[i].tierName, 10, scroll + ((i + 2) * 80), 30, TEXT_COLOR_PRESSED, FALSE);
+        RGUIDrawTextEx(tierar.tierar[i].tier, 10, scroll + ((i + 2) * 80) + 30, 30, TEXT_COLOR_PRESSED, FALSE);
+        RGUIDrawText(tierar.tierar[i].peakTier, 60, scroll + ((i + 2) * 80) + 30, 30,FALSE);
         final = scroll + ((i + 2) * 80) + 30;
+        DrawLine(10, scroll + ((i + 2) * 80) + 65, Width() - 10, scroll + ((i + 2) * 80) + 65, 
+                    RGUIGetTextColor());
     }
     if(final == 0){
         RGUIDrawText("No data about this player found.....", 10, scroll + 100, 30, FALSE);
@@ -58,7 +66,9 @@ void ResultState(){
         ChangeState(3);
         for(int i = 0; i < tierAmount; i++){
             sprintf_s(tierar.tierar[tierAmount].tier, 5, "");
-            strcpy_s(tierar.tierar[tierAmount].tierName, 10, "");
+            sprintf_s(tierar.tierar[tierAmount].peakTier, 30, "");
+
+            strcpy_s(tierar.tierar[tierAmount].tierName, 50, "");
             strcpy_s(tierar.name, 16, "");
         }
         tierAmount = 0;

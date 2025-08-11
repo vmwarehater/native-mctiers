@@ -17,10 +17,12 @@ VOID LoadingState(){
         curTime = GetTime();
         init = true;
     }
-    char text[11] = "Loading...";
+    char text[15] = "Just a moment";
+    // idk what i did wrong but this specifically is pissing me off, why doesn't it center normally!!!!
     RGUIDrawText(text, 
-                    ((float)Width() / 2) - MeasureTextEx(RGUIGetFont(), text, 40, 1).x, 
-                    (Height() / 2) - 120, 90, FALSE);
+                    ((float)Width() / 2) - MeasureTextEx(RGUIGetFont(), text, 23, 1).x, 
+                    (Height() / 2) - 60, 40, FALSE);
+    // like this does it normally but the one above doesn't????
     RGUIDrawText(animation[curAnim], 
                     ((float)Width() / 2) - MeasureTextEx(RGUIGetFont(), animation[curAnim], 40, 1).x, 
                     (Height() / 2), 40, FALSE);

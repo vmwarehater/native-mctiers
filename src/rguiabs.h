@@ -9,10 +9,13 @@
 #include "extern/raylib/raylib.h"
 #include "extern/raylib/raygui.h"
 
+
 VOID RGUIInit();
 VOID RGUISetIconToDefault();
 VOID RGUIDrawText(const PCHAR text, INT x, INT y, FLOAT fontSize, BOOL isError);
+VOID RGUIDrawTextEx(const PCHAR text, INT x, INT y, FLOAT fontSize, int property, BOOL isError);
 Color RGUIGetBackgroundColor();
+Color RGUIGetTextColor();
 INT RGUIDrawButton(const PCHAR text, INT x, INT y, INT width, INT height);
 INT RGUIDrawTextBox(const PCHAR text, INT x, INT y, INT width, INT height, FLOAT fontSize, BOOL editMode);
 INT Width();

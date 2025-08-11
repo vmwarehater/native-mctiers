@@ -24,8 +24,20 @@ VOID RGUIDrawText(const PCHAR text, INT x, INT y, FLOAT fontSize, BOOL isError){
     DrawTextEx(GuiGetFont(), text, pos, fontSize, 1, color);
 }
 
+VOID RGUIDrawTextEx(const PCHAR text, INT x, INT y, FLOAT fontSize, int property, BOOL isError){
+    Vector2 pos = {x, y};
+    Color color;
+    if(isError) color = RED;
+    else color = GetColor(GuiGetStyle(TEXT, property));
+    DrawTextEx(GuiGetFont(), text, pos, fontSize, 1, color);
+}
+
 Color RGUIGetBackgroundColor(){
     return GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR));
+}
+
+Color RGUIGetTextColor(){
+    return GetColor(GuiGetStyle(TEXT, TEXT_COLOR_NORMAL));
 }
 
 INT RGUIDrawButton(const PCHAR text, INT x, INT y, INT width, INT height){

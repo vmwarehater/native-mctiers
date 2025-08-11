@@ -12,8 +12,9 @@
 #include "../typedef.h"
 
 typedef struct _Tiers {
-    char tierName[10];
+    char tierName[50];
     char tier[5];
+    char peakTier[30];
 } Tiers;
 
 void BeginTier(char* name);

@@ -9,6 +9,7 @@
 #include "../state/resultstate.h"
 #include "../state/state.h"
 #include <Shlwapi.h>
+#include <time.h>
 
 static char uuid[40];
 
@@ -20,7 +21,7 @@ BOOL FillUUID(char* username){
         naettRequestWithOptions(url, 0, NULL);
     naettRes* res = naettMake(req);
     while(!naettComplete(res)){
-        Sleep(100);
+        Sleep(1);
     }
     if(naettGetStatus(res) < 0){
         return FALSE;
@@ -45,7 +46,7 @@ BOOL GetPlayerHead(char* username){
         naettRequestWithOptions(url, 0, NULL);
     naettRes* res = naettMake(req);
     while(!naettComplete(res)){
-        Sleep(10);
+        Sleep(1);
     }
     if(naettGetStatus(res) < 0){
         return FALSE;
@@ -90,7 +91,7 @@ DWORD WINAPI SearchThreadEntry(LPVOID stuff){
         naettRequestWithOptions(url, 0, NULL);
     naettRes* res = naettMake(req);
     while(!naettComplete(res)){
-        Sleep(100);
+        Sleep(1);
     }
     if(naettGetStatus(res) < 0){
         ChangeState(3);
@@ -103,11 +104,38 @@ DWORD WINAPI SearchThreadEntry(LPVOID stuff){
     cJSON *specific = NULL;
     cJSON_ArrayForEach(specific, json){
         Tiers tier;
-        sprintf_s(tier.tierName, 10, "%s", specific->string);
+        char res[32];
+        cJSON* time = cJSON_GetObjectItem(specific, "attained");
+        struct tm lt;
+        time_t timet = (time_t)time->valueint;
+        errno_t errres = localtime_s(&lt, &timet);
+        if(errres != EINVAL){
+            size_t result = _strftime_l(res, 32, "%D", &lt, NULL);
+            if(result == 0){
+                printf("ERROR, COULDN'T GET TIME!\n");
+                sprintf_s(res, 32, "UNKNOWN");
+            }
+        } else {
+            printf("ERROR, COULDN'T GET LOCALTIME!\n");
+            sprintf_s(res, 32, "UNKNOWN");
+        }
+        
+        sprintf_s(tier.tierName, 30, "%s (as of %s)", specific->string, res);
         cJSON* curtier = cJSON_GetObjectItem(specific, "tier");
         cJSON* horl = cJSON_GetObjectItem(specific, "pos");
+        cJSON* peak_tier = cJSON_GetObjectItem(specific, "peak_tier");
+        cJSON* peakhorl = cJSON_GetObjectItem(specific, "peak_pos");
+        cJSON* isRetired = cJSON_GetObjectItem(specific, "retired");
         char level = horl->valueint ? 'L' : 'H';
+        char peaklevel = peakhorl->valueint ? 'L' : 'H';
         sprintf_s(tier.tier, 5, "%cT%d", level, curtier->valueint);
+        char retiredS[12];
+        if(isRetired->valueint){
+            sprintf_s(retiredS, 12, "retired");
+        } else {
+            sprintf_s(retiredS, 12, "still in");
+        }
+        sprintf_s(tier.peakTier, 30, "(peak: %cT%d, %s)", peaklevel, peak_tier->valueint, retiredS);
         PlaceTier(tier);
     }
     cJSON_Delete(json);
