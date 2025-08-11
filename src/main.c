@@ -7,7 +7,7 @@
 
 #define DEBUG
 
-#ifndef _DEBUG
+#ifndef DEBUG
 INT WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 #else 
 INT main(INT argc, PCHAR argv[])
