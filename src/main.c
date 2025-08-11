@@ -18,6 +18,10 @@ INT main(INT argc, PCHAR argv[])
     SetTraceLogLevel(LOG_ERROR);
     SetTargetFPS(60);
     InitWindow(900, 1200, "Native Mctiers");
+    int x = GetMonitorWidth(GetCurrentMonitor());
+    int y = GetMonitorHeight(GetCurrentMonitor());
+    SetWindowSize(x / 3, y / 1.5);
+    SetWindowPosition(x / 2, y / 2);
     RGUIInit();
     while(!WindowShouldClose()){
         BeginDrawing();
