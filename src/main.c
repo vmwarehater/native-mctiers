@@ -3,8 +3,16 @@
 #include "rguiabs.h"
 
 #include "state/state.h"
+#include <winbase.h>
 
-INT main(INT argc, PCHAR argv[]){
+#define DEBUG
+
+#ifndef _DEBUG
+INT WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+#else 
+INT main(INT argc, PCHAR argv[])
+#endif
+{
     naettInit(NULL);
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     SetTraceLogLevel(LOG_ERROR);
