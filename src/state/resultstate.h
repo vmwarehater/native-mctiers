@@ -17,9 +17,9 @@ typedef struct _Tiers {
     char peakTier[30];
 } Tiers;
 
-void BeginTier(char* name);
-void PlaceTier(Tiers tier);
-void ResultState();
+VOID BeginTier(PCHAR name);
+VOID PlaceTier(Tiers tier);
+VOID ResultState();
 
 
 

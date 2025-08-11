@@ -11,10 +11,13 @@
 #include <Shlwapi.h>
 #include <time.h>
 
-static char uuid[40];
+static CHAR uuid[40];
+static HANDLE hThread = NULL;
 
-BOOL FillUUID(char* username){
-    char url[70];
+
+
+static inline BOOL FillUUID(PCHAR username){
+    CHAR url[70];
     sprintf_s(url, 70, "https://api.mojang.com/users/profiles/minecraft/%s", username);
     naettOption* option;
     naettReq* req = 
@@ -27,7 +30,7 @@ BOOL FillUUID(char* username){
         return FALSE;
     }
     int bodyLength = 0;
-    const char* body = (const char*)naettGetBody(res, &bodyLength);
+    const PCHAR body = (const PCHAR)naettGetBody(res, &bodyLength);
     printf("%s\n", body);
     cJSON *json = cJSON_Parse(body);
     cJSON *id = cJSON_GetObjectItem(json, "id");
@@ -38,8 +41,8 @@ BOOL FillUUID(char* username){
     return TRUE;
 }
 
-BOOL GetPlayerHead(char* username){
-    char url[70];
+static inline BOOL GetPlayerHead(PCHAR username){
+    CHAR url[70];
     sprintf_s(url, 70, "https://www.mc-heads.net/avatar/%s", username);
     naettOption* option;
     naettReq* req = 
@@ -72,7 +75,7 @@ BOOL GetPlayerHead(char* username){
 }
 
 DWORD WINAPI SearchThreadEntry(LPVOID stuff){
-    char* username = (char*)stuff;
+    PCHAR username = (PCHAR)stuff;
     BOOL result = FillUUID(username);
     if(result == FALSE){
         ChangeState(3);
@@ -84,7 +87,7 @@ DWORD WINAPI SearchThreadEntry(LPVOID stuff){
         return -1;
     }
     BeginTier(username);
-    char url[70];
+    CHAR url[70];
     sprintf_s(url, 70, "https://mctiers.com/api/rankings/%s", uuid);
     naettOption* option;
     naettReq* req = 
@@ -98,13 +101,13 @@ DWORD WINAPI SearchThreadEntry(LPVOID stuff){
         return -1;
     }
     int bodyLength = 0;
-    const char* body = (const char*)naettGetBody(res, &bodyLength);
+    const PCHAR body = (const PCHAR)naettGetBody(res, &bodyLength);
     printf("%s\n", body);
     cJSON *json = cJSON_Parse(body);
     cJSON *specific = NULL;
     cJSON_ArrayForEach(specific, json){
         Tiers tier;
-        char res[32];
+        CHAR res[32];
         cJSON* time = cJSON_GetObjectItem(specific, "attained");
         struct tm lt;
         time_t timet = (time_t)time->valueint;
@@ -126,10 +129,10 @@ DWORD WINAPI SearchThreadEntry(LPVOID stuff){
         cJSON* peak_tier = cJSON_GetObjectItem(specific, "peak_tier");
         cJSON* peakhorl = cJSON_GetObjectItem(specific, "peak_pos");
         cJSON* isRetired = cJSON_GetObjectItem(specific, "retired");
-        char level = horl->valueint ? 'L' : 'H';
-        char peaklevel = peakhorl->valueint ? 'L' : 'H';
+        CHAR level = horl->valueint ? 'L' : 'H';
+        CHAR peaklevel = peakhorl->valueint ? 'L' : 'H';
         sprintf_s(tier.tier, 5, "%cT%d", level, curtier->valueint);
-        char retiredS[12];
+        CHAR retiredS[12];
         if(isRetired->valueint){
             sprintf_s(retiredS, 12, "retired");
         } else {
@@ -145,8 +148,6 @@ DWORD WINAPI SearchThreadEntry(LPVOID stuff){
 }
 
 
-VOID BeginSearch(char* username){
-    // we don't free the handle from this, which might cause a very minor memleak
-    // TODO: find a way to free the handle this function returns so we dont leak memory
+VOID BeginSearch(PCHAR username){
     CreateThread(NULL, 0, SearchThreadEntry, (LPVOID)username, 0, 0);
 }

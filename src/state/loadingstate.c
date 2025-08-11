@@ -1,8 +1,9 @@
 #include "loadingstate.h"
 #include "../rguiabs.h"
+#include <wtypesbase.h>
 
 
-static char* animation[] = {
+static PCHAR animation[] = {
     "ooO",
     "Ooo",
     "oOo"
@@ -10,14 +11,14 @@ static char* animation[] = {
 
 
 VOID LoadingState(){
-    static int curAnim = 0;
-    static double curTime;
+    static INT curAnim = 0;
+    static DOUBLE curTime;
     static bool init = false;
     if(init == false){
         curTime = GetTime();
         init = true;
     }
-    char text[15] = "Just a moment";
+    CHAR text[15] = "Just a moment";
     // idk what i did wrong but this specifically is pissing me off, why doesn't it center normally!!!!
     RGUIDrawText(text, 
                     ((float)Width() / 2) - MeasureTextEx(RGUIGetFont(), text, 23, 1).x, 

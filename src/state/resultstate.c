@@ -13,13 +13,13 @@ typedef struct _TierArray {
 static TierArray tierar;
 static int tierAmount = 0;
 
-void BeginTier(char* name){
+VOID BeginTier(PCHAR name){
     strcpy_s(tierar.name, 17, name);
 }
 
 
 
-void PlaceTier(Tiers tier){
+VOID PlaceTier(Tiers tier){
     if(tierAmount < 0 || tierAmount > 19) return;
     strcpy_s(tierar.tierar[tierAmount].tier, 5, tier.tier);
     strcpy_s(tierar.tierar[tierAmount].tierName, 50, tier.tierName);
@@ -28,7 +28,7 @@ void PlaceTier(Tiers tier){
     tierAmount++;
 }
 
-void ResultState(){
+VOID ResultState(){
     static BOOL init = false;
     // will implement scrolling when needed
     static UINT64 scroll = 0;
@@ -67,7 +67,6 @@ void ResultState(){
         for(int i = 0; i < tierAmount; i++){
             sprintf_s(tierar.tierar[tierAmount].tier, 5, "");
             sprintf_s(tierar.tierar[tierAmount].peakTier, 30, "");
-
             strcpy_s(tierar.tierar[tierAmount].tierName, 50, "");
             strcpy_s(tierar.name, 16, "");
         }

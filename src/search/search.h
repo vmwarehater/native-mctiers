@@ -8,8 +8,7 @@
 
 #include "../typedef.h"
 
-
-VOID BeginSearch(char* username);
+VOID BeginSearch(PCHAR username);
 
 
 #endif
