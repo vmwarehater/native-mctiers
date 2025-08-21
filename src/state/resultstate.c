@@ -48,7 +48,6 @@ VOID ResultState(){
     RGUIDrawText(tierar.name, 10, scroll + 10,  50, FALSE);
     if(GetMouseWheelMoveV().y != 0){
         scroll += GetMouseWheelMoveV().y * 20;
-        printf("Scroll: %f - GetMouseWheelMoveV().y: %f\n", scroll, GetMouseWheelMoveV().y);
     }
     if(IsKeyDown(KEY_PAGE_DOWN)){
         scroll -= 100.0f * 10;
