@@ -17,8 +17,8 @@ INT main(INT argc, PCHAR argv[])
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     SetTraceLogLevel(LOG_ERROR);
     SetTargetFPS(60);
-
-    InitWindow(900, 1200, "Stub Window, if you see this please report it");
+    // what I have to do for res awareness....
+    InitWindow(900, 1200, "Initial Window, if you see this please report it");
     int x = GetMonitorWidth(GetCurrentMonitor());
     int y = GetMonitorHeight(GetCurrentMonitor());
     CloseWindow();

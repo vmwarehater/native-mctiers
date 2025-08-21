@@ -1,4 +1,5 @@
 #include "state.h"
+#include "eastereggstate.h"
 #include "loadingstate.h"
 #include "resultstate.h"
 #include "searchstate.h"
@@ -26,6 +27,9 @@ VOID RenderStates(){
             break;
         case 3:
             ErrorState();
+            break;
+        case 4:
+            EasterEggState();
             break;
         default:
             ChangeState(0);

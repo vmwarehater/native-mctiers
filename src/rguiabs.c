@@ -50,6 +50,11 @@ INT RGUIDrawTextBox(const PCHAR text, INT x, INT y, INT width, INT height, FLOAT
     return GuiTextBox(pos, text, fontSize, editMode);
 }
 
+INT RGUIDrawWindow(const PCHAR text, INT x, INT y, INT width, INT height){
+    Rectangle pos = {x, y, width, height};
+    return GuiWindowBox(pos, text);
+}
+
 INT Width(){
     return GetScreenWidth();
 }

@@ -18,6 +18,7 @@ Color RGUIGetBackgroundColor();
 Color RGUIGetTextColor();
 INT RGUIDrawButton(const PCHAR text, INT x, INT y, INT width, INT height);
 INT RGUIDrawTextBox(const PCHAR text, INT x, INT y, INT width, INT height, FLOAT fontSize, BOOL editMode);
+INT RGUIDrawWindow(const PCHAR text, INT x, INT y, INT width, INT height);
 INT Width();
 INT Height();
 Font RGUIGetFont();

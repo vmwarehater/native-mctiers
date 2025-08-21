@@ -11,7 +11,8 @@ typedef struct _TierArray {
 } TierArray;
 
 static TierArray tierar;
-static int tierAmount = 0;
+static INT tierAmount = 0;
+
 
 VOID BeginTier(PCHAR name){
     strcpy_s(tierar.name, 17, name);
@@ -29,12 +30,8 @@ VOID PlaceTier(Tiers tier){
 }
 
 VOID ResultState(){
+    static FLOAT scroll = 0;
     static BOOL init = false;
-    // will implement scrolling when needed
-    static UINT64 scroll = 0;
-    if(GetMouseWheelMoveV().y <= 0){
-        scroll += GetMouseWheelMoveV().y * 10;
-    }
     static Image img;
     static Texture text;
     if(init == false){
@@ -44,12 +41,21 @@ VOID ResultState(){
         SetWindowIcon(image);
         init = true;
     }
-    Vector2 pos = {Width() - 200, 10};
+    Vector2 pos = {Width() - 200, scroll + 10};
     DrawTextureEx(text, pos, 0, 1, WHITE);
     
     UINT64 final = 0;
     RGUIDrawText(tierar.name, 10, scroll + 10,  50, FALSE);
-    
+    if(GetMouseWheelMoveV().y != 0){
+        scroll += GetMouseWheelMoveV().y * 20;
+        printf("Scroll: %f - GetMouseWheelMoveV().y: %f\n", scroll, GetMouseWheelMoveV().y);
+    }
+    if(IsKeyDown(KEY_PAGE_DOWN)){
+        scroll -= 100.0f * 10;
+    }
+    if(scroll >= 0){
+        scroll = 0;
+    }
     for(int i = 0; i < tierAmount; i++){
         RGUIDrawTextEx(tierar.tierar[i].tierName, 10, scroll + ((i + 2) * 80), 30, TEXT_COLOR_PRESSED, FALSE);
         RGUIDrawTextEx(tierar.tierar[i].tier, 10, scroll + ((i + 2) * 80) + 30, 30, TEXT_COLOR_PRESSED, FALSE);
