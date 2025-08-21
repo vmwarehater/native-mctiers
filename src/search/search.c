@@ -43,7 +43,7 @@ static inline BOOL FillUUID(PCHAR username){
 
 static inline BOOL GetPlayerHead(PCHAR username){
     CHAR url[70];
-    sprintf_s(url, 70, "https://www.mc-heads.net/avatar/%s", username);
+    sprintf_s(url, 70, "https://www.mc-heads.net/head/%s", username);
     naettOption* option;
     naettReq* req = 
         naettRequestWithOptions(url, 0, NULL);

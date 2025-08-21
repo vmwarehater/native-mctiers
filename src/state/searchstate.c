@@ -19,7 +19,7 @@ VOID SearchState(){
         sprintf_s(searchBuffer, 17, "");
     }
     INT button = RGUIDrawButton("Search", 10, 140, 150, 50);
-    RGUIDrawText("Star The Github Repo!\nhttps://github.com/vmwarehater/native-mctiers", 
+    RGUIDrawText("Star The Github Repo!\ngithub.com/vmwarehater/native-mctiers", 
                             10, Height() - 80,30, FALSE);
     if(button == 1 || IsKeyPressed(KEY_ENTER)){
         ChangeState(1);

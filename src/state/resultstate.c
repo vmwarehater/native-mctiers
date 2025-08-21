@@ -41,7 +41,7 @@ VOID ResultState(){
         SetWindowIcon(image);
         init = true;
     }
-    Vector2 pos = {Width() - 200, scroll + 10};
+    Vector2 pos = {Width() - 200, scroll + 5};
     DrawTextureEx(text, pos, 0, 1, WHITE);
     
     UINT64 final = 0;

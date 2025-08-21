@@ -9,7 +9,7 @@
 
 
 
-void EasterEggState(){
+VOID EasterEggState(){
     static Texture2D text;
     static BOOL init = false;
     if(init == false){
