@@ -32,6 +32,9 @@ VOID ResultState(){
     static BOOL init = false;
     // will implement scrolling when needed
     static UINT64 scroll = 0;
+    if(GetMouseWheelMoveV().y <= 0){
+        scroll += GetMouseWheelMoveV().y * 10;
+    }
     static Image img;
     static Texture text;
     if(init == false){

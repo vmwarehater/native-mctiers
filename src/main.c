@@ -17,11 +17,12 @@ INT main(INT argc, PCHAR argv[])
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     SetTraceLogLevel(LOG_ERROR);
     SetTargetFPS(60);
-    InitWindow(900, 1200, "Native Mctiers");
+
+    InitWindow(900, 1200, "Stub Window, if you see this please report it");
     int x = GetMonitorWidth(GetCurrentMonitor());
     int y = GetMonitorHeight(GetCurrentMonitor());
-    SetWindowSize(x / 3, y / 1.5);
-    SetWindowPosition(x / 2, y / 2);
+    CloseWindow();
+    InitWindow(x / 3, y / 1.5, "Native Mctiers");
     RGUIInit();
     while(!WindowShouldClose()){
         BeginDrawing();
