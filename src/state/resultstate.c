@@ -7,7 +7,7 @@
 #include <winuser.h>
 
 typedef struct _TierArray {
-    char name[17];
+    CHAR name[17];
     Tiers tierar[20];
 } TierArray;
 
@@ -37,10 +37,12 @@ VOID ResultState(){
     static Texture text;
     if(init == false){
         SetWindowTitle(tierar.name);
-        char temp[100];
-        char buffer[512];
+        CHAR temp[100];
+        CHAR buffer[512];
+        // we could and should use GetTempPath2A but it will make anything under Windows 11 22H2 useless
         GetTempPathA(100, temp);
         sprintf_s(buffer, 512, "%s\\mctiers\\head.png", temp);
+        printf("\nHead is stored at %s, retrieving\n", buffer);
         Image image = LoadImage(buffer);
         text = LoadTextureFromImage(image);
         SetWindowIcon(image);

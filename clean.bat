@@ -5,4 +5,3 @@ rd build /s /q
 del *.exe
 del *.exp
 del *.lib
-del *.res

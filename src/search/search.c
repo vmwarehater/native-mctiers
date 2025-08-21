@@ -62,12 +62,13 @@ static inline BOOL GetPlayerHead(PCHAR username){
     printf("head image size is %d\n", bodyLength);
 
     WCHAR temppath[100];
+    // TODO: in like 10 years use GetTempPath2W when everyone is on 11 or up
     GetTempPathW(100, temppath);
     WCHAR path[512];
     wsprintfW(path, L"%s\\mctiers", temppath);
     WCHAR headpath[512];
     wsprintfW(headpath, L"%s\\mctiers\\head.png", temppath);
-    
+    wprintf(L"\nHead is going to be stored at %s\n", headpath);
     if(!PathFileExistsW(path)){
         CreateDirectoryW(path, NULL);
     }
