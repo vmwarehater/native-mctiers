@@ -2,6 +2,8 @@
 #include "../extern/naett/naett.h"
 #include "../extern/cjson/cjson.h"
 
+#include <errhandlingapi.h>
+#include <fileapi.h>
 #include <handleapi.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,6 +12,7 @@
 #include "../state/state.h"
 #include <Shlwapi.h>
 #include <time.h>
+#include <winuser.h>
 
 static CHAR uuid[40];
 static HANDLE hThread = NULL;
@@ -57,12 +60,21 @@ static inline BOOL GetPlayerHead(PCHAR username){
     int bodyLength = 0;
     void* body = (void*)naettGetBody(res, &bodyLength);
     printf("head image size is %d\n", bodyLength);
-    if(!PathFileExistsW(L"temp\\")){
-        CreateDirectoryW(L"temp", NULL);
+
+    WCHAR temppath[100];
+    GetTempPathW(100, temppath);
+    WCHAR path[512];
+    wsprintfW(path, L"%s\\mctiers", temppath);
+    WCHAR headpath[512];
+    wsprintfW(headpath, L"%s\\mctiers\\head.png", temppath);
+    
+    if(!PathFileExistsW(path)){
+        CreateDirectoryW(path, NULL);
     }
-    HANDLE hFile = CreateFileW(L"temp\\head.png", GENERIC_READ | GENERIC_WRITE, 0, NULL,
+    HANDLE hFile = CreateFileW(headpath, GENERIC_READ | GENERIC_WRITE, 0, NULL,
                                 CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL , NULL);
     if(hFile == INVALID_HANDLE_VALUE){
+        printf("failed with status of %lu\n", GetLastError());
         return FALSE;
     }
     BOOL result = WriteFile(hFile, body, bodyLength, NULL, NULL);

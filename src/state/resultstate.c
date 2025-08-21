@@ -1,4 +1,5 @@
 #include "resultstate.h"
+#include <fileapi.h>
 #include <string.h>
 #include "../rguiabs.h"
 #include "state.h"
@@ -36,7 +37,11 @@ VOID ResultState(){
     static Texture text;
     if(init == false){
         SetWindowTitle(tierar.name);
-        Image image = LoadImage("temp/head.png");
+        char temp[100];
+        char buffer[512];
+        GetTempPathA(100, temp);
+        sprintf_s(buffer, 512, "%s\\mctiers\\head.png", temp);
+        Image image = LoadImage(buffer);
         text = LoadTextureFromImage(image);
         SetWindowIcon(image);
         init = true;
