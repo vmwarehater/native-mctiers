@@ -1,7 +1,7 @@
 .xmake/
 build/
 *.exe
-*.lib
+nativemctiers.lib
 *.exp
 temp/
 *.res
